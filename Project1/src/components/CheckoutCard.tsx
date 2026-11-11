@@ -2,6 +2,7 @@ import type {CheckoutCardFunctions } from "./Thrift Happens.tsx"
 
 
 export default function CheckoutCard({
+    id,
     name,
     image,
     price,
@@ -16,7 +17,7 @@ return (
         <p>Price: {price}</p>
         <p>quantity: {itemQuantity}</p>
         <p>Total: {itemQuantity * price}</p>
-        <button onClick = {() => removeFromCheckout}>Remove From Checkout</button>
+        <button onClick = {() => removeFromCheckout(id,itemQuantity)}>Remove From Checkout</button>
     </div>
 );
 }

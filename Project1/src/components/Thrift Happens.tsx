@@ -14,7 +14,7 @@ export interface ItemContainerProps {
 
 export interface CheckoutContainerProps {
     items: ClothingProduct[];
-    removeFromCheckout: string;
+    removeFromCheckout:(id: number, checkoutQuantity: number) => void;
 }
 
 export interface ItemCardFunctions extends ClothingProduct {
@@ -23,7 +23,7 @@ export interface ItemCardFunctions extends ClothingProduct {
 }
 
 export interface CheckoutCardFunctions extends ClothingProduct {
-    removeFromCheckout:string;
+    removeFromCheckout:(id: number, checkoutQuantity: number) => void;
 }
 
 export default function ThriftHappens() 
@@ -61,12 +61,25 @@ export default function ThriftHappens()
             : {...catalogueItem}));
     }
 
+    const removeFromCheckout = (id: number, checkoutQuantity: number) => {
+        setCatalogue((prevCatalogue) => 
+                prevCatalogue.map((catalogueItem) => catalogueItem.id == id 
+            ? {...catalogueItem, itemQuantity: 0, quantity: catalogueItem.quantity + checkoutQuantity} 
+            : {...catalogueItem}));
+        setCheckout((prevCheckout) => prevCheckout.filter((checkoutItem) => checkoutItem.id !== id));
+    }
+
+    const emptyCart = () => {
+        checkout.forEach(item => {removeFromCheckout(item.id, item.itemQuantity)});
+    }
+
     return (
         <div>
             <img src = "src/assets/images/logo.png" className="Logo"></img>
             <ItemContainer catalogue={catalogue} itemValueChange={itemValueChange} addToCheckout={addToCheckout}/>
             <h1>CHECKOUT</h1>
-            <CheckoutContainer items = {checkout} removeFromCheckout = {""}/>
+            <CheckoutContainer items = {checkout} removeFromCheckout = {removeFromCheckout}/>
+            <button onClick={emptyCart}>Remove All</button>
         </div>
     );
 }
