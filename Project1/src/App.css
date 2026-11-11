@@ -182,3 +182,28 @@
     border-right-color: var(--border);
   }
 }
+
+.ItemContainer {
+  display: grid;
+  grid-template-columns: 33% 34% 33%;
+  width: 100%;
+}
+
+.ItemCard {
+  background-color: white;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.QuantityButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Logo {
+  width:100%;
+}
